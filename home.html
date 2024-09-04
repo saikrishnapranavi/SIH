@@ -45,6 +45,17 @@
             font-size: 24px;
             cursor: pointer;
         }
+        .nav-icons .login-signup {
+            margin-left: 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .username-display {
+            font-size: 18px;
+            margin-left: 20px;
+            color: white;
+            font-weight: bold;
+        }
 
         /* Side Menu */
         .side-menu {
@@ -253,6 +264,7 @@
         <div class="nav-icons">
             <span class="icon liked-products" onclick="redirectToLikedItems()">&#10084;</span>
             <span class="icon cart" onclick="redirectToshoppingcartItems()">&#128722;</span>
+            <span class="login-signup" id="login-signup" onclick="redirectToLogin()">Login/Sign Up</span>
         </div>
     </header>
 
@@ -270,8 +282,8 @@
         <a href="#">Order History</a>
         <a href="#">Track Orders</a>
 
-        <div class="section-title">Account</div>
-        <a href="#">Your Account</a>
+        <div class="section-title" id="account-section-title">Account</div>
+        <a href="#" id="account-link" onclick="redirectToLogin()">Login/Sign Up</a>
         <a href="#">Payment Methods</a>
         <a href="#">Address Book</a>
 
@@ -430,13 +442,30 @@
     </footer>
 
     <script>
+        function redirectToLogin() {
+            window.location.href = 'index.html';
+        }
         function redirectToLikedItems() {
             window.location.href = 'liked_items.html';
         }
-
         function redirectToshoppingcartItems() {
             window.location.href = 'shopping_cart.html';
         }
+        window.onload = function() {
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+            document.getElementById('login-signup').innerText = currentUser;
+            document.getElementById('login-signup').onclick = function() {
+                alert('You are already signed in as ' + currentUser);
+            };
+        }
+    };
+
+
+        // Display the current logged-in user
+        const currentUser = localStorage.getItem('currentUser');
+        document.getElementById('usernameDisplay').textContent = currentUser || 'Guest';
+
         // Side Menu Toggle
         function toggleMenu() {
             var sideMenu = document.getElementById('sideMenu');
